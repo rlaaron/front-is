@@ -51,7 +51,7 @@ export default function DashboardAdminPage() {
               type="button"
               className="text-Consultar provedor text-first hover:text-white border border-first hover:bg-first focus:ring-4 focus:outline-none focus:ring-first font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2  "
             >
-              Consultar Provedor
+              <a href="/dashboard-admin/clients">Consultar provedor</a>
             </button>
           </div>
 
@@ -59,9 +59,9 @@ export default function DashboardAdminPage() {
             {/* <h1 className="text-base">cerrar sesion</h1> */}
             <button
               type="button"
-              class="text-cerrar sesion text-first hover:text-white border border-first hover:bg-first focus:ring-4 focus:outline-none focus:ring-first font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2  "
+              className="text-cerrar sesion text-first hover:text-white border border-first hover:bg-first focus:ring-4 focus:outline-none focus:ring-first font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2  "
             >
-              Cerrar Sesion
+              <a href="/login">Cerrar sesion</a>
             </button>
           </div>
         </div>

@@ -24,22 +24,18 @@ export default function Login() {
     localStorage.setItem("user", response.data.user);
     localStorage.setItem("id", response.data.id);
     localStorage.setItem("selected", selected);
+    localStorage.setItem("userName", response.data.fullName);
 
     console.log(response.data);
     // console.error(response.data);
 
     setJwt(response.data.token);
 
-    // if (selected === "provedor") {
-    //   window.location.href = "/provedor";
-    // } else {
-    //   window.location.href = "/dashboard-admin";
-    // }
     const role:string[] = response.data.roles;
     if (role.includes("admin")) {
       window.location.href = "/dashboard-admin";
     } else {
-      window.location.href = "dashboard-admin/provedor";
+      window.location.href = "dashboard-provedor";
     }
 
     console.log(response.data);
@@ -76,7 +72,7 @@ export default function Login() {
               Iniciar Sesion
             </h1>
 
-            <div className="inline-flex rounded-md shadow-sm w-full">
+            {/* <div className="inline-flex rounded-md shadow-sm w-full">
               <button
                 type="button"
                 key={"provedor"}
@@ -101,7 +97,7 @@ export default function Login() {
               >
                 Administrador
               </button>
-            </div>
+            </div> */}
 
             <div className="relative z-0 flex mb-4 mt-10">
               <input

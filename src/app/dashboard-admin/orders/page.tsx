@@ -36,10 +36,22 @@ export default function ConsultOrders() {
       } catch (error) {
         console.error("Error fetching orders:", error);
       }
-    } else{
-      const data = JSON.parse(localStorage.getItem("OrdersBySearch")!);
+    }  else if (localStorage.getItem("OrdersByClient") != null){
+      const termSearch = localStorage.getItem("OrdersByClient");
+      try{
+        const url = `http://localhost:4000/api/Orders/${termSearch}`;
+        const response = await axios.get(url);
+        const data: Order[] = response.data;
+        console.log(data);
+        setOrders(data);
+      }catch(error){
+        console.error("Error fetching orders:", error);
+      }
+    } else {
+      const data = JSON.parse(localStorage.getItem("OrdersByClient")!);
       setOrders(data);
     }
+
   }
 
   const sendOrderDetails = (order: Order) => {

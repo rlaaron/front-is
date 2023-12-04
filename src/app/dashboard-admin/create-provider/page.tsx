@@ -79,16 +79,7 @@ export default function CreateProviderPage() {
     setIsDistributionZoneValid(isDistributionZone(distributionZone));
 
     validateData();
-
-    // if (isEmail && isPassword && isPhone && isFullName && isDistributionZone) {
-    if (
-      // isEmailValid &&
-      // isPasswordValid &&
-      // isPhoneValid &&
-      // isFullNameValid &&
-      // isDistributionZoneValid
-      dataCorrect
-    ) {
+    if (dataCorrect) {
       try {
         // const numberPhone = +phone;
         console.log(phone);
