@@ -1,6 +1,7 @@
 "use client";
 import { use, useEffect, useState } from "react";
 import { Oswald } from "next/font/google";
+import axios from "axios";
 import logotipo from "../../../public/assets/logotipo.png";
 import Image from "next/image";
 
@@ -12,39 +13,41 @@ export default function Login() {
   const [user, setUser] = useState("user");
   const [id, setId] = useState("id");
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token"); 
-  //   if (token) {
-  //     window.location.href = "/home";
-  //   } else {
-  //     window.location.href = "/login";
-  //   }
-  //   return () => {}; // cleanup function
-  // }, []);
-
+  const url = "http://localhost:4000/api/auth/login";
   const login = async () => {
-    const response = await fetch("http://localhost:1337/auth/local", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        identifier: email,
-        password: password,
-      }), 
-    }); 
-    const data = await response.json();
-    if (data.user) {
-      localStorage.setItem("token", data.jwt);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      window.location.href = "/home";
+    const data = {
+      email: email,
+      password: password,
+    };
+    const response = await axios.post(url, data);
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("user", response.data.user);
+    localStorage.setItem("id", response.data.id);
+    localStorage.setItem("selected", selected);
+
+    console.log(response.data);
+    // console.error(response.data);
+
+    setJwt(response.data.token);
+
+    // if (selected === "provedor") {
+    //   window.location.href = "/provedor";
+    // } else {
+    //   window.location.href = "/dashboard-admin";
+    // }
+    const role:string[] = response.data.roles;
+    if (role.includes("admin")) {
+      window.location.href = "/dashboard-admin";
     } else {
-      alert("Error al iniciar sesión");
+      window.location.href = "dashboard-admin/provedor";
     }
+
+    console.log(response.data);
   };
 
   const route = () => {
-    window.location.href = selected === "provedor" ? "/provedor" : "/cliente";
+    // window.location.href = selected === "provedor" ? "/provedor" : "/administrador";
+    console.log('test');
   };
 
   return (
@@ -88,15 +91,15 @@ export default function Login() {
               </button>
               <button
                 type="button"
-                key={'Admin'}
+                key={'Administrador'}
                 className={`px-8 py-1 text-sm font-medium border border-first rounded-r-lg ${
-                  selected === 'Admin'
+                  selected === 'Administrador'
                     ? 'bg-first text-white'
                     : 'bg-third text-first'
                 } w-50%`}
-                onClick={() => setSelected('Admin')}
+                onClick={() => setSelected('Administrador')}
               >
-                Admin
+                Administrador
               </button>
             </div>
 
@@ -106,11 +109,14 @@ export default function Login() {
                 id="floating_standard"
                 className="block py-2.5 px-0 w-full text-sm text-fiveth bg-transparent border-0 border-b-2 border-first appearance-none dark:text-black dark:border-first dark:focus:border-first focus:outline-none focus:ring-0 focus:border-first peer"
                 placeholder=" "
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <label
                 htmlFor="floating_standard"
                 className="absolute text-sm text-fifth dark:text-fifth duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-fifth peer-focus:dark:text-fifth peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
+
                 Usuario
               </label>
             </div>
@@ -121,6 +127,8 @@ export default function Login() {
                 id="floating_standard"
                 className="block py-2.5 px-0 w-full text-sm text-fiveth bg-transparent border-0 border-b-2 border-first appearance-none dark:text-black dark:border-first dark:focus:border-first focus:outline-none focus:ring-0 focus:border-first peer"
                 placeholder=" "
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <label
                 htmlFor="floating_standard"
@@ -132,7 +140,9 @@ export default function Login() {
 
             <div className="bg-white mt-10 rounded-lg ">
               <button
-                onClick={route}
+                
+                // onClick={route}
+                onClick={login}
                 type="button"
                 className="bg-first text-third w-full py-2.5  rounded-lg text-sm shadow-xl hover:shadow-2xl font-semibold text-center inline-block"
               >
