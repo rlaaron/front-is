@@ -12,21 +12,30 @@ export default function OrderDetails() {
   }, []);
 
   const getOrder = () => {
-    if(localStorage.getItem("OrdersBySearch") == null){
-      const orderString: string | null = localStorage.getItem("order");
+    // if(localStorage.getItem("OrdersBySearch") == null){
+    //   const orderString: string | null = localStorage.getItem("order");
+      
+    //   if (orderString) {
+    //     const order: Order = JSON.parse(orderString);
+    //     console.log("order by searhc1"+order);
+    //     setOrder(order);
+    //   }
+    // }else{
+    //   const orderString: string | null = localStorage.getItem("OrdersBySearch");
+    //   if (orderString) {
+    //     const order: Order = JSON.parse("order by searhc 2"+ orderString);
+    //     console.log(order);
+    //     setOrder(order);
+    //   }
+    // }
+    const orderString: string | null = localStorage.getItem("order");
+      
       if (orderString) {
         const order: Order = JSON.parse(orderString);
-        console.log(order);
+        console.log("order by searhc1"+order);
         setOrder(order);
       }
-    }else{
-      const orderString: string | null = localStorage.getItem("OrdersBySearch");
-      if (orderString) {
-        const order: Order = JSON.parse(orderString);
-        console.log(order);
-        setOrder(order);
-      }
-    }
+
   }
 
   let orderItems: OrderItem[] = [];

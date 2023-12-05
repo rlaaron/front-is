@@ -9,6 +9,11 @@ import axios from "axios";
 export default function DashboardAdminPage() { 
   const [orders, setOrders] = useState([]);
 
+  const consultAllOrders = () => {
+    localStorage.setItem("allOrders", "true");
+    window.location.href = "/dashboard-admin/orders";
+  }
+
   return (
     <>
       {/* <div className="flex items-center justify-center w-screen h-screen"> */}
@@ -19,8 +24,11 @@ export default function DashboardAdminPage() {
             <button
               type="button"
               className="text-Consultar pedidos text-first hover:text-white border border-first hover:bg-first focus:ring-4 focus:outline-none focus:ring-first font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2  "
+              onClick={consultAllOrders}
             >
-              <a href="/dashboard-admin/orders">Consultar pedidos</a>
+              {/* <a href="/dashboard-admin/orders">Consultar pedidos</a>
+               */}
+               Consultar Pedidos
               {/* Consultar pedidos */}
             </button>
           </div>

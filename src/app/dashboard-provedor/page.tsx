@@ -23,6 +23,7 @@ export default function DashboardProvedor() {
 
     const getAllOrders = () => {
         localStorage.setItem("OrdersByClient", name);
+        localStorage.setItem("searchByClient", "true");
         window.location.href = "/dashboard-admin/orders";
     };
     

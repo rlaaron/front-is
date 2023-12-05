@@ -12,6 +12,7 @@ export default function SearchOrderPage() {
       const response = await axios.get(url);
       const data = response.data;
       localStorage.setItem("OrdersBySearch", JSON.stringify(data));
+      localStorage.setItem("search", "true");
 
       if(Array.isArray(data)){
         window.location.href = "/dashboard-admin/orders";

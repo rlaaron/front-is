@@ -17,41 +17,69 @@ export default function ConsultOrders() {
   const [userName, setUserName] = useState("userName");
   const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
   //   const router = useRouter();
-//   const router = useRouter();
+  //   const router = useRouter();
 
   useEffect(() => {
     getAllOrders();
+    localStorage.setItem("allOrders", "false");
+    localStorage.setItem("searchByClient", "false");
+    localStorage.setItem("search", "false");
+
+    // cleanData();
     // return () => {}; // cleanup function
   }, []);
 
   async function getAllOrders() {
-    if(localStorage.getItem("OrdersBySearch") == null){
+    console.log(`allOrders: ${localStorage.getItem("allOrders")}, searchByClient: ${localStorage.getItem("searchByClient")}, search: ${localStorage.getItem("search")}` );
+    
+    if (localStorage.getItem("allOrders") == "true") {
       try {
         const url = "http://localhost:4000/api/Orders";
         const response = await axios.get(url);
         const data: Order[] = response.data;
         console.log(data);
-  
+
         setOrders(data);
+        // localStorage.setItem("allOrders", "false");
       } catch (error) {
         console.error("Error fetching orders:", error);
       }
-    }  else if (localStorage.getItem("OrdersByClient") != null){
-      const termSearch = localStorage.getItem("OrdersByClient");
-      try{
+    } 
+
+    if (localStorage.getItem("searchByClient") == "true") {
+      try {
+        const termSearch = localStorage.getItem("OrdersByClient");
         const url = `http://localhost:4000/api/Orders/${termSearch}`;
         const response = await axios.get(url);
         const data: Order[] = response.data;
         console.log(data);
         setOrders(data);
-      }catch(error){
+        // localStorage.setItem("searchByClient", "false");
+      } catch (error) {
         console.error("Error fetching orders:", error);
       }
-    } else {
-      const data = JSON.parse(localStorage.getItem("OrdersByClient")!);
-      setOrders(data);
     }
 
+    if(localStorage.getItem("search") == "true"){
+      const data = JSON.parse(localStorage.getItem("OrdersBySearch")!);
+      setOrders(data);
+      console.log(data);
+      
+      // localStorage.setItem("search", "false");
+    }
+
+
+
+
+
+    // userNAme si es llamdo por cliente debi de tener user name
+    // termsearhsi es llamado por term search debo de tener uudi or username
+    // admin i es llamado por admin debo obtener toda la data
+  }
+
+  const cleanData = async() => {
+    const data:Order[] = [];
+    setOrders(data)
   }
 
   const sendOrderDetails = (order: Order) => {

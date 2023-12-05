@@ -14,11 +14,21 @@ export default function Login() {
   const [id, setId] = useState("id");
 
   const url = "http://localhost:4000/api/auth/login";
+  /**
+   * The `login` function sends a POST request to the login endpoint with the user's email and
+   * password, stores the response data in local storage, sets the JWT token, and redirects the user to
+   * the appropriate dashboard based on their role.
+   */
   const login = async () => {
+    /* The code is creating an object called `data` with two properties: `email` and `password`. The
+    values of these properties are being set to the current values of the `email` and `password`
+    state variables, respectively. This object is then used as the payload for the POST request to
+    the login endpoint. */
     const data = {
       email: email,
       password: password,
     };
+
     const response = await axios.post(url, data);
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("user", response.data.user);
@@ -71,33 +81,6 @@ export default function Login() {
             <h1 className="font-bold text-left text-3xl mb-5 text-first">
               Iniciar Sesion
             </h1>
-
-            {/* <div className="inline-flex rounded-md shadow-sm w-full">
-              <button
-                type="button"
-                key={"provedor"}
-                className={`px-5 py-1 text-sm font-medium border border-first rounded-l-lg ${
-                  selected === "provedor"
-                    ? "bg-first text-white"
-                    : "bg-third text-first"
-                } w-50%`}
-                onClick={() => setSelected("provedor")}
-              >
-                Provedor
-              </button>
-              <button
-                type="button"
-                key={'Administrador'}
-                className={`px-8 py-1 text-sm font-medium border border-first rounded-r-lg ${
-                  selected === 'Administrador'
-                    ? 'bg-first text-white'
-                    : 'bg-third text-first'
-                } w-50%`}
-                onClick={() => setSelected('Administrador')}
-              >
-                Administrador
-              </button>
-            </div> */}
 
             <div className="relative z-0 flex mb-4 mt-10">
               <input
